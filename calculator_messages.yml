@@ -1,0 +1,53 @@
+EN: 
+  welcome: "Welcome to Calculator! Enter your name: "
+  error_invalid_name: "Make sure to use a valid name."
+  welcome_name: "Hello, "
+
+  first_number: "What's the first number?"
+  second_number: "What's the second number?"
+  error_invalid_number: "Please enter a valid number"
+
+  operator_prompt: "What operation would you like to perform?\n
+    1) add\n
+    2) subtract\n
+    3) multiply\n
+    4) divide"
+
+  error_operator: "Must choose 1, 2, 3, or 4"
+  operation_adding: "Adding"
+  operation_subtracting: "Subtracting"
+  operation_multiplying: "Multiplying"
+  operation_dividing: "Dividing"
+  operation_message: "the two numbers..."
+
+  result: "The result is "
+
+  another_calculation?: "Do you want to perform another calculation? (Y/N)"
+  goodbye: "Thank you for using the calculator. Good bye!"
+
+FR:
+  welcome: "Bienvenue sur Calculatrice ! Entrez votre nom: "
+  error_invalid_name: "Assurez-vous d'utiliser un nom valide."
+  welcome_name: "Bon jour, "
+
+  first_number: "Quel est le premier numéro?"
+  second_number: "Quel est le deuxième numéro?"
+  error_invalid_number: "S'il vous plait, entrez un nombre valide"
+
+  operator_prompt: "Quelle opération souhaitez-vous effectuer?\n
+    1) ajouter\n
+    2) soustraire\n
+    3) multiplier\n
+    4) diviser"
+
+  error_operator: "Vous devez choisir 1, 2, 3 ou 4"
+  operation_adding: "Ajouter"
+  operation_subtracting: "Soustraire"
+  operation_multiplying: "Multiplier"
+  operation_dividing: "Diviser"
+  operation_message: "les deux nombres..."
+
+  result: "Le résultat est "
+
+  another_calculation?: "Souhaitez-vous effectuer un autre calcul ? (Y/N)"
+  goodbye: "Merci d'avoir utilisé la calculatrice. Au revoir!"
