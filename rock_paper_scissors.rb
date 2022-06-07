@@ -1,40 +1,56 @@
-VALID_CHOICES = %w(rock paper scissors spock lizard)
-
-WIN_LOSE = [['rock', 'scissors'], ['rock', 'lizard'],
-            ['paper', 'rock'], ['paper', 'spock'],
-            ['scissors', 'paper'], ['scissors', 'lizard'],
-            ['lizard', 'spock'], ['lizard', 'paper'],
-            ['spock', 'scissors'], ['spock', 'rock']]
-
-def display_results(player, computer)
-  if WIN_LOSE.include?([player, computer])
-    prompt("You won!")
-  elsif WIN_LOSE.include?([computer, player])
-    prompt("Computer won!")
-  else
-    prompt("It's a tie!")
-  end
-end
+COMBINATIONS = {
+  'rock' => ['scissors', 'lizard'],
+  'paper' => ['rock', 'spock'],
+  'scissors' => ['paper', 'lizard'],
+  'lizard' => ['spock', 'paper'],
+  'spock' => ['scissors', 'rock']
+}
 
 def prompt(message)
-  Kernel.puts("=> #{message}")
+  puts("=> #{message}\n")
 end
 
-def match_letters?(collection, letters)
+def match_letters?(letters)
   result = ''
-  collection.each do |element|
-    result = element.start_with?(letters)
+  COMBINATIONS.keys.each do |option|
+    result = option.start_with?(letters)
     break if result
   end
   result
 end
 
-player_score = 0
-computer_score = 0
+def letter_to_word(letter)
+  COMBINATIONS.keys.filter { |option| option.start_with?(letter) }.join
+end
+
+def display_results(player, computer)
+  if COMBINATIONS.key?(player) && COMBINATIONS[player].include?(computer)
+    prompt("You won!")
+  elsif player == computer
+    prompt("It's a tie!")
+  else
+    prompt("Computer won!")
+  end
+end
+
+def display_score(scoreboard)
+  scoreboard.each { |k, v| prompt("The current score for #{k} is #{v}") }
+end
+
+def print_final_winner(scoreboard)
+  if scoreboard[:player] == 3
+    prompt("You have crushed the computer. Congratulations!")
+  elsif scoreboard[:computer] == 3
+    prompt("Computer has defeated you.")
+  end
+end
+
+scoreboard = { player: 0, computer: 0 }
 
 welcome_message = <<MSG
 Welcome to Rock, Paper, Scissors, Spock, Lizard!
 Whoever gets 3 wins first will be the grand winner.
+When you respond, you may also simply enter the first letter of your choice.
 Are you ready...?
 MSG
 
@@ -47,49 +63,48 @@ loop do
     choice = ''
 
     loop do
-      prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+      prompt("Choose one: #{COMBINATIONS.keys.join(', ')}.")
 
       loop do
-        choice = Kernel.gets().chomp().downcase
+        choice = gets.chomp.downcase
         break unless choice == 's'
         prompt("Enter sc for scissors or sp for spock")
       end
 
-      if match_letters?(VALID_CHOICES, choice)
+      if match_letters?(choice)
         break
       else
         prompt("That's not a valid choice.")
       end
     end
 
-    player_choice = VALID_CHOICES.filter { |option| option.start_with?(choice) }
-    player_choice = player_choice.join
-    computer_choice = VALID_CHOICES.sample
+    player_choice = letter_to_word(choice)
+    computer_choice = COMBINATIONS.keys.sample
 
     prompt("You chose: #{player_choice}; Computer chose: #{computer_choice}")
-    prompt("\n")
+
     display_results(player_choice, computer_choice)
-
-    if WIN_LOSE.include?([player_choice, computer_choice])
-      player_score += 1
-    elsif WIN_LOSE.include?([computer_choice, player_choice])
-      computer_score += 1
-    end
-
-    prompt("Your score #{player_score} : #{computer_score} Computer Score")
     prompt("\n")
-    if player_score == 3
-      prompt("You have crushed the computer. Congratulations!")
-      break
-    elsif computer_score == 3
-      prompt("Computer has defeated you.")
-      break
+
+    if COMBINATIONS[player_choice].include?(computer_choice)
+      scoreboard[:player] += 1
+    elsif COMBINATIONS[computer_choice].include?(player_choice)
+      scoreboard[:computer] += 1
     end
+
+    display_score(scoreboard)
+    prompt("\n")
+
+    print_final_winner(scoreboard)
+    break if scoreboard[:player] == 3 || scoreboard[:computer] == 3
   end
 
   prompt("Do you want to play again?")
-  answer = Kernel.gets().chomp()
-  break unless answer.downcase().start_with?('y')
+  answer = gets.chomp
+  break unless answer.downcase.start_with?('y')
+
+  scoreboard[:player] = 0
+  scoreboard[:computer] = 0
 end
 
 prompt("Thank you for playing. Good bye!")
